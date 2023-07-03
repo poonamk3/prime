@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,16 @@ USE_TZ = True
 import os
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+
+#CELERY_accept_content = ['application/json']
+#CELERY_task_serializer = 'json'
+#CELERY_TASK_DEFAULT_QUEUE = 'myqueue'
+CELERY_BROKER_URL = "sqs://" 
+#(os.environ.get('AWS_ACCESS_KEY_ID'), os.environ.get('AWS_SECRET_ACCESS_KEY'))
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    "region": "ap-southeast-1",
+    'queue_name_prefix': 'django-',
+    'visibility_timeout': 7200,
+    'polling_interval': 1
+}
+CELERY_RESULT_BACKEND = None
